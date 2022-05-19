@@ -15,8 +15,8 @@ exports.auth = async (req, res, next) => {
       decodedData = jwt.verify(token, process.env.SECRET);
 
       req.userId = decodedData?._id;
-      console.log('userid', req.userId);
-      console.log('decodedData in middleware', decodedData);
+   //   console.log('userid', req.userId);
+     // console.log('decodedData in middleware', decodedData);
     } 
    
 //  find user by id and set req.user
@@ -41,7 +41,10 @@ res.status(401).json({
 }
 
 
-    else {
+    else
+  
+    
+    {
 
 console.log('user founded in Database and you can do next step');
 next();
@@ -53,3 +56,19 @@ next();
   }
 };
 
+
+
+
+exports.adminCheck = async (req, res, next) => {
+    const { email } = req.user;
+  
+    const adminUser = await userModel.findOne({ email }).exec();
+  
+    if (adminUser.role !== "admin") {
+      res.status(403).json({
+        err: "Admin resource. Access denied.",
+      });
+    } else {
+      next();
+    }
+  };

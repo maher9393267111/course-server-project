@@ -8,6 +8,7 @@ const studentSchema = mongoose.Schema(
     description: { type: String },
     hello1: { type: String,default: "" },
     hello2: { type: String,default: "" },
+    role: { type: String, default: "user" },
 
     
 

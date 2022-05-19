@@ -6,7 +6,7 @@ const userModel = require("../models/user");
 
 exports.auth = async (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers?.authorization?.split(" ")[1];
     //const isCustomAuth = token.length < 500;
 
     let decodedData;
@@ -25,14 +25,25 @@ exports.auth = async (req, res, next) => {
     const user = await userModel.findById(req.userId);
     req.user = user;
 
-    if (!user) {
+    if (!user && !req.userId) {
       return res.status(401).json({
-        msg: "Auth failed beacuse  can't find user in Database"
+        msg: "Auth failed beacuse  no auth  and access denied",
       });
     }
+
+else if (!user) {
+
+res.status(401).json({
+    msg: "Auth failed beacuse  use not found in database",
+
+}
+);
+}
+
+
     else {
 
-console.log('user founded in Datanse and you can do next step');
+console.log('user founded in Database and you can do next step');
 next();
     }
 

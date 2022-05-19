@@ -12,7 +12,7 @@ router.post("/register",register);
 
 router.post("/login",login);
 
-router.put("/updateUser/:id",updateUser);
+router.put("/updateUser",auth,updateUser);
 
 
 

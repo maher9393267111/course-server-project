@@ -92,19 +92,22 @@ if (!name || !email || !password) {
 
 
 exports.updateUser = async(req, res) => {
-    const  id = req.params.id;  
+   // const  id = req.params.id;  
 
    // const { name, email, password } = req.body;
 
-    const userfind = await userModel.findOne({ _id: id
+    const userfind = await userModel.findOne({ _id:   req.user._id
         //req.user._id 
     });
 
     if (!userfind) {
         return res.status(400).json({
-            msg: 'user does not exist'
+            msg: 'user does not exist and this not current user'
         });
     }
+
+
+
 
  
 
@@ -114,7 +117,7 @@ exports.updateUser = async(req, res) => {
 
   
   // set req.body in founded user 
-  const userafterupdate = await userModel.findOneAndUpdate( {_id: id }, { $set: req.body }, { new: true });
+  const userafterupdate = await userModel.findOneAndUpdate( {_id:req.user._id }, { $set: req.body }, { new: true });
 
 console.log('userafterupdate----------->',userafterupdate);
     

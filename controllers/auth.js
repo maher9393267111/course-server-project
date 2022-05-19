@@ -79,9 +79,11 @@ exports.updateUser = async (req, res) => {
   // const { name, email, password } = req.body;
 
   const userfind = await userModel.findOne({
-    _id: req.user._id,
+    _id: req.params.id,
     //req.user._id
   });
+
+  console.log(userfind);
 
   if (!userfind) {
     return res.status(400).json({
@@ -91,7 +93,7 @@ exports.updateUser = async (req, res) => {
 
   // set req.body in founded user
   const userafterupdate = await userModel.findOneAndUpdate(
-    { _id: req.user._id },
+    { _id: req.params.id },
     { $set: req.body },
     { new: true }
   );
@@ -136,7 +138,7 @@ exports.removeUser = async (req, res) => {
 
 // remove user by 
 
-const deleteuser = await userModel.findOneAndDelete({ _id: req.user._id });
+const deleteuser = await userModel.findOneAndDelete({ _id: req.params.id });
 
 
 if (!deleteuser) {

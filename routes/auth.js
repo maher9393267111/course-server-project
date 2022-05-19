@@ -16,7 +16,7 @@ router.post("/register",register);
 
 router.post("/login",login);
 
-router.put("/updateUse/:id",auth,updateUser);
+router.put("/updateUser/:id",auth,adminorownCheck,updateUser);
 
 router.delete("/removeUser/:id",auth,adminorownCheck,removeUser);
 

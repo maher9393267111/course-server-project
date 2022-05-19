@@ -79,17 +79,17 @@ exports.adminCheck = async (req, res, next) => {
 
 
   exports.adminorownCheck = async (req, res, next) => {
-    //const { email } = req.user;
+   
     
 id =req.params.id;
 console.log('id',id);
-const adminUser = await userModel.findById(id).exec();
+const userbyprams = await userModel.findById(id).exec();
 
 
 
  
   
-    if ( adminUser._id.toString() === req.user._id.toString() || req.user.role === "admin" ) {
+    if ( userbyprams._id.toString() === req.user._id.toString() || req.user.role === "admin" ) {
 
         next();
      

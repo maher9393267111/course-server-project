@@ -132,39 +132,28 @@ exports.logout = async (req, res) => {
 
 exports.removeUser = async (req, res) => {
 
-// check if current user is admin or not and if current user  is his own account
-const id = req.params.id;
-
-//console,log('params---->>>>',id);
-console.log('req.user._id---->>>>',req.user._id,'id params---->>>>',id);
 
 
-    const user = await userModel.findOne({ _id: req.user._id });
-    console.log('controller---->',user._id);
+// remove user by 
+
+const deleteuser = await userModel.findOneAndDelete({ _id: req.user._id });
 
 
+if (!deleteuser) {
+    return res.status(400).json({
+        msg: "user does not exist",
+    });
+    }
 
-    if (user._id.toString() == id.toString() || user.role == "admin") {
-        const user = await userModel.findOneAndDelete({ _id: req.params.id });
+    else {
         res.status(200).json({
-            msg: "user deleted",
+            msg: "user deleted successfully",
         });
-    
-
-    
+  
 
     }
-     
 
 
-
-// ( user._id.toString() !== id.toString()  || user.role !== "admin"   ) 
-
-else {
-  return res.status(403).json({
-    msg: "Admin resource. Access denied. or this not your account sorry",
-  });
-}
 
 
    

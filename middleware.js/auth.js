@@ -72,3 +72,32 @@ exports.adminCheck = async (req, res, next) => {
       next();
     }
   };
+
+
+
+// current auth user id === params id hec an deleete or update his account or admin account else error 403
+
+
+  exports.adminorownCheck = async (req, res, next) => {
+    //const { email } = req.user;
+    
+id =req.params.id;
+console.log('id',id);
+const adminUser = await userModel.findById(id).exec();
+
+
+
+ 
+  
+    if ( adminUser._id.toString() === req.user._id.toString() || req.user.role === "admin" ) {
+
+        next();
+     
+    } else {
+      
+        res.status(403).json({
+            err: "Admin resource. Access denied. &&&&&  this not your account sorry",
+      });
+
+    }
+  };

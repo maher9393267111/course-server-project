@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {auth,adminCheck} = require("../middleware.js/auth");
+const {auth,adminCheck
+    ,adminorownCheck
+
+
+} = require("../middleware.js/auth");
 
 
 const {register,login,updateUser,removeUser} = require("../controllers/auth");
@@ -26,16 +30,12 @@ router.delete("/removeUser/:id",auth,removeUser);
 
 // adminCheck;
 
-router.get("/hello",auth,adminCheck, (req, res) => {
+router.get("/hello/:id",auth,adminorownCheck, (req, res) => {
 
-if (req.user.role === "admin" || req.user.role === "user") {
 
-    res.status(200).json({
-        msg: "hello " + req.user.name,
+    res.json({
+        msg: "hello maher itis workj",
     });
-}
-
-
     
 });
 

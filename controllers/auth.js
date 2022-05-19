@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 
+
 // register
 
 exports.register = async(req, res) => {
@@ -105,15 +106,9 @@ exports.updateUser = async(req, res) => {
         });
     }
 
-    // if (!name || !email || !password) {
-    //     return res.status(400).json({
-    //         msg: 'please enter all fields'
-    //     });
-    // }
+ 
 
-const newdata = {}
 
-// // set reqbody data to newdata
 
 
 
@@ -124,23 +119,43 @@ const newdata = {}
 console.log('userafterupdate----------->',userafterupdate);
     
 
+const token = jwt.sign({ _id: userafterupdate._id, userinfo: userafterupdate }, process.env.SECRET);
 
 
-res.json({ userafterupdate });
+if (!userafterupdate) {
 
-//   userafterupdate.save((err, user) => {
-//         if (err) {
-//             return res.status(400).json({
-//                 errormessage: err.message
-//             });
-//         }
-//         // user.salt = undefined;
-//         // user.password = undefined;
-//         const token = jwt.sign({ _id: user._id, userinfo: user }, process.env.SECRET);
-//         res.json({ user, token });
-//     }
-    
-    
-    // );
+    return res.status(400).json({
+        msg: 'user does not exist'
+    });
+
 }
 
+else {
+ 
+
+res.status(200).json({ userafterupdate, token });
+
+}
+
+
+    
+    
+    
+}
+
+
+
+
+// logout
+
+
+
+exports.logout = async(req, res) => {
+
+    //delete token from db
+    const user = await userModel.findOneAndUpdate({ _id: req.user._id }, { $set: { token: '' } });
+
+    res.status(200).json({
+        msg: 'logout success'
+    });
+}

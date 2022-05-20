@@ -8,6 +8,7 @@ const {auth,adminCheck
 
 
 const {register,login,updateUser,removeUser} = require("../controllers/auth");
+const {remove} = require("../controllers/cloudinary");
 
 
 
@@ -20,6 +21,10 @@ router.put("/updateUser/:id",auth,adminorownCheck,updateUser);
 
 router.delete("/removeUser/:id",auth,adminorownCheck,removeUser);
 
+
+// remove old image 
+
+router.post("/removeImage",auth,remove);
 
 
 

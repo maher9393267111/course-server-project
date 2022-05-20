@@ -91,6 +91,14 @@ exports.updateUser = async (req, res) => {
     });
   }
 
+ if (req.body.password) {
+
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+  req.body.password = hashedPassword;
+  console.log(req.body.password);
+ }
+
+
   // set req.body in founded user
   const userafterupdate = await userModel.findOneAndUpdate(
     { _id: req.params.id },
@@ -157,6 +165,10 @@ if (!deleteuser) {
   
 
     }
+
+
+
+    
 
 
 

@@ -1,0 +1,48 @@
+const parentCatModel = require('../models/parentcategory');
+
+// cereate parent category
+
+
+exports.createParentCat = async (req, res) => {
+
+
+    const { name, image } = req.body;
+    console.log(req.body);
+
+    const newParentCat = new parentCatModel({
+        name,
+        image,
+
+
+    });
+
+    const parentcat = await newParentCat.save();
+    res.status(200).json({
+        msg: "parent category created successfully",
+        parentcat,
+    });
+
+    // handle error
+
+    if (!parentcat) {
+        res.status(400).json({
+            mesage: "error creating parent category",
+        });
+    }
+
+}
+
+
+
+// all parent categories
+
+
+exports.allParentCats = async (req, res) => {
+    
+        const parentcats = await parentCatModel.find();
+        res.status(200).json({
+            message : "all parent categories",
+            parentcats,
+        });
+    
+    }

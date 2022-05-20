@@ -13,6 +13,7 @@ const app = express();
 
 // routes
 const authRoutes = require("./routes/auth");
+const parentCatRoutes = require("./routes/parentcat");
 
 
 
@@ -35,6 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 // routes middleware
 
 app.use('/api/auth', authRoutes)
+app.use('/api/parentcat', parentCatRoutes)
 
 
 //-----------------------------------------------------

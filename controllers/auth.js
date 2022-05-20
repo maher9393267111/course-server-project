@@ -44,7 +44,7 @@ exports.register = async (req, res) => {
       { _id: user._id, userinfo: user },
       process.env.SECRET
     );
-    res.json({ user, token });
+    res.json({ user, token,message:` ${user.name} created successfully welcome to Courses Site` });
   });
 };
 
@@ -68,7 +68,7 @@ exports.login = async (req, res) => {
   }
   // create token
   const token = jwt.sign({ _id: user._id, userinfo: user }, process.env.SECRET);
-  res.json({ user, token });
+  res.json({ user, token ,message:`${user.name} Login successfully welcome to Courses Site` });
 };
 
 // update user
@@ -80,7 +80,7 @@ exports.updateUser = async (req, res) => {
 
   const userfind = await userModel.findOne({
     _id: req.params.id,
-    //req.user._id
+    
   });
 
   console.log(userfind);
@@ -96,6 +96,9 @@ exports.updateUser = async (req, res) => {
     { _id: req.params.id },
     { $set: req.body },
     { new: true }
+
+
+
   );
 
   console.log("userafterupdate----------->", userafterupdate);
@@ -107,10 +110,10 @@ exports.updateUser = async (req, res) => {
 
   if (!userafterupdate) {
     return res.status(400).json({
-      msg: "user does not exist",
+      message: "user does not exist and update failed",
     });
   } else {
-    res.status(200).json({ userafterupdate, token });
+    res.status(200).json({ user:userafterupdate, token,message:"user updated successfully" });
   }
 };
 

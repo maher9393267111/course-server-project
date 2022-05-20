@@ -15,6 +15,11 @@ const studentSchema = mongoose.Schema(
     image: { 
 secure_url: { type: String },
 public_id: { type: String },
+default:{
+
+  secure_url: '',
+  public_id: '',
+}
 
      },
 

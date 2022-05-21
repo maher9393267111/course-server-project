@@ -14,6 +14,7 @@ const app = express();
 // routes
 const authRoutes = require("./routes/auth");
 const parentCatRoutes = require("./routes/parentcat");
+const subCatRoutes = require("./routes/subcat");
 
 
 
@@ -37,6 +38,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/auth', authRoutes)
 app.use('/api/parentcat', parentCatRoutes)
+app.use('/api/subcat', subCatRoutes)
 
 
 //-----------------------------------------------------

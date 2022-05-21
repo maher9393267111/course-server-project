@@ -9,6 +9,7 @@ const parentCatSchema = mongoose.Schema(
  
   },
 
+  childern_cat_id: { type: Schema.Types.ObjectId, ref: "sub_cat" },
 
   },
   { timestamps: true }

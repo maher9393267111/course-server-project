@@ -9,11 +9,11 @@ const subcategoryCatSchema = mongoose.Schema(
  
 //   },
 
-images : [{
+// images : [{
 
-type:String,
+// type:String,
 
-}],
+// }],
 
 image:{
 //type : Array,

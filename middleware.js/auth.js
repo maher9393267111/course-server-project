@@ -8,15 +8,18 @@ exports.auth = async (req, res, next) => {
 
     const token = req.headers?.authorization?.split(" ")[1];
     //const isCustomAuth = token.length < 500;
-  //  console.log("token------------->", token);
+   console.log("token------------->", token);
 
 
     let decodedData;
 
     if (token) {
+
+ 
       decodedData = jwt.verify(token, process.env.SECRET);
 
       req.userId = decodedData?._id;
+      console.log("decodedData", decodedData);
       //   console.log('userid', req.userId);
       // console.log('decodedData in middleware', decodedData);
     }
@@ -25,6 +28,7 @@ exports.auth = async (req, res, next) => {
 
     const user = await userModel.findById(req.userId);
     req.user = user;
+   
 
     if (!user && !req.userId) {
       return res.status(401).json({
@@ -45,6 +49,7 @@ exports.auth = async (req, res, next) => {
 
 exports.adminCheck = async (req, res, next) => {
   const { email } = req.user;
+  console.log("email", email);
 
   const adminUser = await userModel.findOne({ email }).exec();
 
@@ -55,6 +60,7 @@ exports.adminCheck = async (req, res, next) => {
   } else {
     next();
   }
+
 };
 
 // current auth user id === params id hec an deleete or update his account or admin account else error 403

@@ -8,10 +8,25 @@ const {auth,adminCheck
 
 
 
-const {prac} = require("../controllers/subCat");
+const {prac,up,createSubCat,allSubCats,updateSubCat} = require("../controllers/subCat");
 
 
-router.post("/prac",prac);
+// creete sub category
+router.post("/createSubCat",auth,adminCheck,createSubCat);
+
+// all sub categories
+
+router.get("/allSubCats",allSubCats);
 
 
-module.exports = router;
+
+// update sub category
+
+//router.put("/updateSubCat/:id",adminCheck,updateSubCat);
+
+
+router.post("/up/:id",auth,adminCheck,updateSubCat);
+
+
+module.exports = router
+

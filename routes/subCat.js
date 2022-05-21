@@ -8,7 +8,7 @@ const {auth,adminCheck
 
 
 
-const {prac,up,createSubCat,allSubCats,updateSubCat} = require("../controllers/subCat");
+const {prac,up,createSubCat,allSubCats,updateSubCat,removeSubCat} = require("../controllers/subCat");
 
 
 // creete sub category
@@ -18,6 +18,9 @@ router.post("/createSubCat",auth,adminCheck,createSubCat);
 
 router.get("/allSubCats",allSubCats);
 
+
+
+ router.delete("/removeSubCat/:id",auth,adminCheck,removeSubCat);
 
 
 // update sub category

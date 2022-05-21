@@ -2,10 +2,11 @@ const res = require("express/lib/response");
 const subCatModel = require("../models/subcategory");
 
 
+
 // // create sub category
 exports.createSubCat = async (req, res) => {
   const { name, image,catid } = req.body;
-  console.log(req.body.image);
+  console.log('------------------------------><<<<hereee',req.body.catid);
   try {
     const subcat = await subCatModel.create({
       name,
@@ -64,7 +65,7 @@ res.status(200).json({
 
 exports.allSubCats = async (req, res) => {
 
-    const allSubCats = await subCatModel.find();
+    const allSubCats = await subCatModel.find().populate('parent_cat_id', 'name _id');
     res.status(200).json({
         message: "all sub categories",
         allSubCats,
@@ -116,6 +117,9 @@ exports.updateSubCat = async (req, res) => {
 
 
 
+
+
+
     
 exports.up = async (req, res) => {
 
@@ -139,4 +143,36 @@ res.status(200).json({
 
 
     }
+    }
+
+
+
+    // remove
+
+
+    exports.removeSubCat = async (req, res) => {
+        const subcat = await subCatModel.findByIdAndDelete(req.params.id);
+        console.log(subcat);
+  
+      try{
+  
+        res.status(200).json({
+          message: `sub category ${subcat.name} deleted successfully`,
+         
+      })
+      }
+       
+      catch(err){
+        console.log(err);
+        res.status(400).json({
+          errmsg:err,
+          message: "error deleting sub category",
+      })
+      }
+      
+        
+  
+        
+  
+       
     }

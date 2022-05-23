@@ -83,22 +83,24 @@ exports.removeLecture = async(req, res) => {
         try{
 
             const lecture = await lectureModel.findById(lectureid);
+            // if courde id is not same then remove from old course and add to new course
+            if(lecture.course != body.course){
+                const oldcourse = await courseModel.findById(lecture.course);
+                oldcourse.courselectures.pull(lecture);
+                await oldcourse.save();
+                const newcourse = await courseModel.findById(body.course);
+                newcourse.courselectures.push(lecture);
+                await newcourse.save();
+            }
 
             const lectureafter = await  lectureModel.findByIdAndUpdate(lectureid, body, { new: true, runValidators: true })
 
-            // console.log(lecture);
-            // lecture.name = body.name;
-            // lecture.title = body.title;
-            // lecture.desc = body.desc;
-            // lecture.url = body.url;
-            // lecture.image = body.image;
-            // lecture.duration = body.duration;
-            // lecture.course = body.course;
+          
             await lecture.save();
             res.status(200).json({
                 message: 'lecture updated successfully',
-                lecturebefore: lecture.name,
-                lectureafter:  lectureafter.name
+                lecturebefore: lecture.course,
+                lectureafter:  lectureafter.course
             });
 
         } catch(err){

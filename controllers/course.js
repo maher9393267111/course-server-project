@@ -108,6 +108,8 @@ exports.updateCourse = (req, res, next) => {
     const courseId = req.params.courseId;
     const body = req.body;
     console.log(body.name, body.duration,body.price);
+
+    
     courseModel.findByIdAndUpdate(courseId, body, { new: true, runValidators: true })
 
         .then(result => {

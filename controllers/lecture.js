@@ -19,7 +19,7 @@ try{
 
     await course.save();
     res.status(201).json({
-        message: 'lecture created successfully',
+        message: `lecture ${lecture.name} created successfully`,
         lecture: lecture
     });
 
@@ -111,3 +111,24 @@ exports.removeLecture = async(req, res) => {
             })};
         }
 
+
+
+        // all lectures
+
+        exports.getAllLectures = async(req, res) => {
+                
+                try{
+    
+                    const lectures = await lectureModel.find().populate('course', 'name _id');
+                    res.status(200).json({
+                        message: 'all lectures',
+                        lectures: lectures
+                    });
+    
+                } catch(err){
+                    console.log(err);
+                    res.status(500).json({
+                        message: err.message,
+                        error: err
+                    })};
+                }

@@ -35,3 +35,36 @@ res.status(500).json({
 
 }
     
+
+
+
+// remove
+
+exports.removeLecture = async(req, res) => {
+
+    const lectureid = req.params.lectureid;
+    console.log(lectureid);
+    try{
+
+        const lecture = await lectureModel.findById(lectureid);
+        console.log('============>',lecture.course);
+        const course = await courseModel.findById(lecture.course);
+        console.log('============>',course.courselectures);
+        course.courselectures.pull(lecture);
+        await course.save();
+        await lecture.remove();
+        res.status(200).json({
+            message: 'lecture removed successfully',
+            lecture: lecture
+        });
+
+    } catch(err){
+        console.log(err);
+        res.status(500).json({
+            message: err.message,
+            error: err
+
+
+        })};
+
+    }

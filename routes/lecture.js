@@ -7,11 +7,13 @@ const {auth,adminCheck
 } = require("../middleware.js/auth");
 
 
-const {createLecture} = require("../controllers/lecture");
+const {createLecture,removeLecture} = require("../controllers/lecture");
 
 
 
 router.post('/create',createLecture );
+
+router.delete('/remove/:lectureid',removeLecture);
 
 
 module.exports = router;

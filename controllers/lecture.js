@@ -118,11 +118,28 @@ exports.removeLecture = async(req, res) => {
         exports.getAllLectures = async(req, res) => {
                 
                 try{
+
+
+                    const page = req.query.page  ===  0  ? req.query.page === 1 : req.query.page        //=== 0 ? 1   :   req.query.page  : 1 //req.query.page : 1;
+
+
+                    console.log('queryyyyy-------->',page);
+    const LIMIT = 4;
+    const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+
+    console.log('start lectures from ----------->',startIndex );  // if page === 0  start from page= 0 -1 = 0 skip o start from 0 to 4
+
+   const total = await lectureModel.countDocuments({});
+   //console.log(total);
     
-                    const lectures = await lectureModel.find().populate('course', 'name _id');
+                    const lectures = await lectureModel.find({}).sort({ _id: -1 }).limit(LIMIT).skip(startIndex).populate('course', 'name _id');
                     res.status(200).json({
                         message: 'all lectures',
-                        lectures: lectures
+                        lectures: lectures,
+                        currentPage: Number(page), 
+                        numberOfPages: Math.ceil(total / LIMIT),
+                         total:total ,
+                         LIMIT:LIMIT
                     });
     
                 } catch(err){

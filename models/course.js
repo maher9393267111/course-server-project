@@ -12,7 +12,7 @@ const courseSchema = mongoose.Schema(
 studentsnumber: { type: Number, default: 2340},
 duration: { type: Number,  },
     subcategory: {type: Schema.Types.ObjectId, ref: "sub-cat",required: true },
-    courselectures: [ {type: Schema.Types.ObjectId, ref: "courselecture"} ],
+    courselectures: [ {type: Schema.Types.ObjectId, ref:"courselecture"} ],
   //  course_url: { type: String, required: true },
 
 
